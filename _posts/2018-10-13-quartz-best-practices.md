@@ -1,3 +1,8 @@
+---
+layout: post
+title: Quartz最佳实践
+---
+
 <div class="message">
   这篇文章翻译自Quartz<a href="http://www.quartz-scheduler.org/documentation/best-practices.html">官方文档<a>。
 </div>
