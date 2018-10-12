@@ -6,6 +6,7 @@ title: Quartz最佳实践
 <div class="message">
   这篇文章翻译自Quartz<a href="http://www.quartz-scheduler.org/documentation/best-practices.html">官方文档<a>。
 </div>
+
 ## 生产系统建议
 #### 跳过更新检查
 Quartz包含一个“更新检查”机制，这个机制会尝试连接远端服务器，来检查是否有新版本可供下载。该检查是异步运行的，不会影响到启动/初始化，并且如果连接失败检查的节奏会逐渐衰减。如果运行检查时发现有更新，Quartz会通过打印日志的方式报告出来。
@@ -41,6 +42,7 @@ TriggerUtils:
 * 导致trigger触发时间到了，job没有执行执行
 * 可能导致死锁
 * 其他奇怪的问题、数据占用
+
 #### 在非集群模式下，不要将两个调度器(scheduler)指向一个数据库。
 如果你将多于一个scheduler实例指向同一组数据库表，且这些实例没有配置集群模式，可能产生以下结果：
 * 导致数据占用(删除数据、抢占数据)
@@ -54,6 +56,7 @@ TriggerUtils:
 
 ## 夏令时(DST)
 #### 避免在夏令时过渡时间附近调度job
+
 注意: 过渡时间的细节和时钟向前或向后移动的时间因地点而异，详细参考：https://secure.wikimedia.org/wikipedia/en/wiki/Daylight\_saving\_time\_around\_the\_world.
 
 SimpleTriggers不受夏令时影响，因为它们总是以精确的毫秒时间触发，并重复精确的毫秒数.
@@ -64,6 +67,7 @@ SimpleTriggers不受夏令时影响，因为它们总是以精确的毫秒时间
 
 * 1:05 AM 可能触发两次! - 可能在CronTrigger上重复触发
 * 2:05 AM 可能会丢失触发! - 可能错过CronTrigger的触发
+
 同样，时间和调整量的具体情况因地区而异。
 
 其他基于沿日历滑动的触发类型（而不是精确的时间量），例如CalenderIntervalTrigger，也会受到类似的影响 - 但是不是错过了一次触发，或者两次触发，最终可能会让它的触发时间偏移一个小时。
@@ -97,5 +101,5 @@ SimpleTriggers不受夏令时影响，因为它们总是以精确的毫秒时间
 你要确定不能让用户随意定义他们想要的Job类型。例如，quartz提供了一种预制的任务 org.quartz.jobs.NativeJob，这种Job可以执行任意的、他们事先定义好的原生系统命令（操作系统级别）。
 同样，其他的任务例如SendEmailJob，包括其他任何有恶意意图的Job
 
-__为了更高效率，允许用户定义任意的Job，你可能都将会面临与OWASP和MITER定义的命令行攻击 相当的威胁。__
+为了更高效率，允许用户定义任意的Job，你可能都将会面临与OWASP和MITER定义的命令行攻击 相当的威胁。
 
