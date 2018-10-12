@@ -3,14 +3,8 @@ layout: page
 title: About
 ---
 
-我是旺子，
-
-There are currently two themes built on Poole:
-
-* [Hyde](http://hyde.getpoole.com)
-* [Lanyon](http://lanyon.getpoole.com)
-
-Learn more and contribute on [GitHub](https://github.com/poole).
+我是旺子，目前生活在广东佛山。
+没有太多的兴趣爱好，平时喜欢看看电影、写写代码。
 
 ## 联系我
 
