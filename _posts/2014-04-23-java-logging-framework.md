@@ -8,10 +8,10 @@ title: Java日志框架
 </div>
 
 ## 名次解释
->**Log4j **(The original apache logging framework for java)，很早以来，使用最为广泛的日志框架。 
->**Commons Logging**，Apache基金会所属的项目，是一套Java日志接口，之前叫Jakarta Commons Logging，后更名为Commons Logging。
->**SLF4J** (Simple logging facade for java)，类似于Commons Logging，是一套Java日志接口。
->**Logback**，一套日志组件的实现(slf4j阵营)。
+>**Log4j**(The original apache logging framework for java)，很早以来，使用最为广泛的日志框架。  
+>**Commons Logging**，Apache基金会所属的项目，是一套Java日志接口，之前叫Jakarta Commons Logging，后更名为Commons Logging。  
+>**SLF4J** (Simple logging facade for java)，类似于Commons Logging，是一套Java日志接口。  
+>**Logback**，一套日志组件的实现(slf4j阵营)。  
 >**JUL**(Java util logging)，自Java1.4以来的官方日志实现。
  
 是不是觉得很混乱？先看一段历史八卦吧：
@@ -90,28 +90,21 @@ Logger L可以手动分配级别。如果L未被分配，它将从父层次等�
 
 ## Logback的Appender
 列举一些常见的appender：
->**ConsoleAppender**，输出至控制台
-
->**FileAppender**，输出至文件
-
->**RollingFileAppender**，输出至可以滚动的文件。TriggeringPolicy，决定是否以及何时进行滚动，RollingPolicy，负责滚动。TimeBasedRollingPolicy 它根据时间来制定滚动策略
-
->**SocketAppender**，它通过序列化LoggingEven 将日志记录输出到远程。如果远程服务是关闭的，日志会被丢弃，其后台通过一个线程定时去尝试连接远程
-
->**JMSTopicAppender和JMSQueueAppender**，它允许将日志输出至JMS。
-
->**SMTPAppender**，输出至邮件服务器。
-
->**DBAppender**，输出至DB，支持DB2,MySQL,Oracle,SQLServer,PostgreSQL等。
-
->**SyslogAppender**，输出至*nix的syslog守护线程。
+> - **ConsoleAppender**，输出至控制台
+> - **FileAppender**，输出至文件
+> - **RollingFileAppender**，输出至可以滚动的文件。TriggeringPolicy，决定是否以及何时进行滚动，RollingPolicy，负责滚动。TimeBasedRollingPolicy 它根据时间来制定滚动策略
+> - **SocketAppender**，它通过序列化LoggingEven 将日志记录输出到远程。如果远程服务是关闭的，日志会被丢弃，其后台通过一个线程定时去尝试连接远程
+> - **JMSTopicAppender和JMSQueueAppender**，它允许将日志输出至JMS。
+> - **SMTPAppender**，输出至邮件服务器。
+> - **DBAppender**，输出至DB，支持DB2,MySQL,Oracle,SQLServer,PostgreSQL等。
+> - **SyslogAppender**，输出至*nix的syslog守护线程。
  
 ## Logback的过滤器
 基于三值逻辑（ternary logic），允许把它们组装成链，从而组成任意的复合过滤策略。过滤器很大程度上受到Linux的iptables启发。
 
->**DENY**，立即被抛弃。
-**NEUTRAL**，交给下一个过滤器处理。
-**ACCEPT**，立即处理。
+> - **DENY**，立即被抛弃。
+> - **NEUTRAL**，交给下一个过滤器处理。
+> - **ACCEPT**，立即处理。
 
 ## 其他特性
 Logback的其他特性，例如排版规则，MDC(Mapped Diagnostic Context)，JMX注册等可以参考[Logback的官方文档](http://logback.qos.ch/manual/index.html)，讲的很详细。
