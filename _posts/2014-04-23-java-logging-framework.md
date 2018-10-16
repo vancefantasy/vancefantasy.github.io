@@ -8,11 +8,11 @@ title: Java日志框架
 </div>
 
 ## 名次解释
->**Log4j**(The original apache logging framework for java)，很早以来，使用最为广泛的日志框架。  
+>**Log4j** (The original apache logging framework for java)，很早以来，使用最为广泛的日志框架。  
 >**Commons Logging**，Apache基金会所属的项目，是一套Java日志接口，之前叫Jakarta Commons Logging，后更名为Commons Logging。  
 >**SLF4J** (Simple logging facade for java)，类似于Commons Logging，是一套Java日志接口。  
->**Logback**，一套日志组件的实现(slf4j阵营)。  
->**JUL**(Java util logging)，自Java1.4以来的官方日志实现。
+>**Logback**，SLF4J日志接口的实现。  
+>**JUL** (Java util logging)，自Java1.4以来的官方日志实现。
  
 是不是觉得很混乱？先看一段历史八卦吧：
 
@@ -20,10 +20,11 @@ title: Java日志框架
  
 >2002年Java1.4发布，Sun推出了自己的日志库，JUL(Java Util Logging)，其实现基本模仿了Log4j的实现。
  
->接着，Apache推出了Jakarta  Commons Logging项目，JCL只是定义了一套日志接口（其内部也提供一个Simple Log的简单实现），支持运行时动态加载日志组件的实现，也就是说，在你应用代码里，只需调用Commons Logging的接口，底层实现可以是Log4j，也可以是Java Util Logging。即便Sun推出了官方的Log API，但实际上很少有人用。
+>接着，Apache推出了Jakarta  Commons Logging项目，JCL只是定义了一套日志接口（其内部提供一个Simple Log的简单实现），支持运行时动态加载日志组件的实现，也就是说，在你应用代码里，只需调用Commons Logging的接口，底层实现可以是Log4j，也可以是Java Util Logging。 即便Sun推出了官方的Log API，但很少有人用。
+
 >2006年，Ceki Gülcü不适应Apache的工作方式，离开了Apache（据说，未求证）。然后先后创建了SLF4J（日志门面接口，类似于Commons Logging）和Logback（SLF4J的实现）两个项目，并回瑞典创建了QOS公司（Quality Open Software，based in Lausanne, witzerland.），以在线销售Log4j Manual文档、SLF4J/Logback技术支持和为期2天的SLF4J/Logback技术培训为主营业务。
 
-QOS官网上是这样描述Logback的： 
+QOS官方网站上是这样描述Logback的： 
 >一个通用，可靠，快速且灵活的日志框架。
  
 Logback还声称：
@@ -38,17 +39,17 @@ SLF4J/Logback对比commons logging/log4j的一些优势：
 1. 性能方面的优势
 2. Commons logging，为了减少构建日志信息的开销，通常的做法是：
 
-	if(log.isDebugEnabled()) {
-		log.debug("User name： " +    user.getName() + " buy goods id：" + good.getId());
-	}
+		if(log.isDebugEnabled()) {
+			log.debug("User name： " +    user.getName() + " buy goods id：" + good.getId());
+		}
 
 	在SLF4J中，你只需这么做：
 
-	log.debug("User name：{}, buy goods id ：{}", user.getName(), good.getId());
+		log.debug("User name：{}, buy goods id ：{}", user.getName(), good.getId());
 		
 	也就是说，slf4j把构建日志的开销放在了它确认需要显示这条日志之后，减少了内存和cpu的开销，代码也更为简洁。但计算参数的开销并没有被推迟。比如：
 		
-	log.debug("User name：{}, user’s password：{}", user.getName(), crypt(password));
+		log.debug("User name：{}, user’s password：{}", user.getName(), crypt(password));
 
 	这也是SLF4J仍保留isDebugEnabled方法的原因。
 
@@ -77,12 +78,13 @@ SLF4J/Logback对比commons logging/log4j的一些优势：
 ## Logback加载配置流程：
 1. 尝试在classpath下查找logback-test.xml文件
 2. 如果文件不存在，查找logback.xml文件
-3. 如果还不存在，logback用BasicConfigurator自动对其进行配置。
+3. 如果文件不存在，使用BasicConfigurator自动对其进行配置。
 
 ##  选择规则
 日志记录请求级别为p，其logger的有效级别为q，只有则当p>=q时，该请求才会被执行。
 该规则是logback的核心，其他各日志框架也遵循此规则。
-级别排序为：TRACE < DEBUG < INFO < WARN < ERROR。
+Level排序为：
+>TRACE < DEBUG < INFO < WARN < ERROR。
 
 ## Logger的有效Level
 Logger L可以手动分配级别。如果L未被分配，它将从父层次等级中第一个非Null继承。所以为了确保每一个logger都持有一个level，根logger需要持有一个level。
