@@ -109,7 +109,7 @@ Logger L可以手动分配级别。如果L未被分配，它将从父层次等�
 > - **ACCEPT**，立即处理。
 
 ## 其他特性
-Logback的其他特性，例如排版规则，MDC(Mapped Diagnostic Context)，JMX注册等可以参考[Logback的官方文档](http://logback.qos.ch/manual/index.html)，讲的很详细。
+Logback的其他特性，例如排版规则，MDC(Mapped Diagnostic Context)，JMX注册等可以参考[Logback的官方文档](http://logback.qos.ch/manual/index.html)。
 
 
 
