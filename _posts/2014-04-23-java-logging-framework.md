@@ -34,21 +34,23 @@ Logback还声称：
 八卦完毕。是否Log4j，commons-logging，SLF4J，Logback之间的关系一下子就清晰了？
 
 SLF4J/Logback对比commons logging/log4j的一些优势：
+
 1. 性能方面的优势
 2. Commons logging，为了减少构建日志信息的开销，通常的做法是：
 
-		if(log.isDebugEnabled()) {
-			log.debug("User name： " +    user.getName() + " buy goods id：" + good.getId());
-		}
-在slf4j阵营，你只需这么做：
+	if(log.isDebugEnabled()) {
+		log.debug("User name： " +    user.getName() + " buy goods id：" + good.getId());
+	}
+
+	在SLF4J中，你只需这么做：
 
 	log.debug("User name：{}, buy goods id ：{}", user.getName(), good.getId());
 		
-也就是说，slf4j把构建日志的开销放在了它确认需要显示这条日志之后，减少了内存和cpu的开销，代码也更为简洁。但计算参数的开销并没有被推迟。比如：
+	也就是说，slf4j把构建日志的开销放在了它确认需要显示这条日志之后，减少了内存和cpu的开销，代码也更为简洁。但计算参数的开销并没有被推迟。比如：
 		
 	log.debug("User name：{}, user’s password：{}", user.getName(), crypt(password));
 
-这也是SLF4J仍保留isDebugEnabled方法的原因。
+	这也是SLF4J仍保留isDebugEnabled方法的原因。
 
 3. Commons logging是通过动态查找机制，在程序运行时，使用自己的ClassLoader寻找和载入本地具体的实现。详细策略可以看commons-logging-*.jar包中的org.apache.commons.logging.impl.LogFactoryImpl.java文件。由于OSGi不同的插件使用独立的的classLoader，其机制限制了commons logging在OSGi中的正常使用。Slf4j在编译期间，静态绑定本地的LOG库，因此可以在OSGi中正常使。 
 4. SLF4J/Logback的文档是免费的，Log4j是收费的。
@@ -89,18 +91,28 @@ Logger L可以手动分配级别。如果L未被分配，它将从父层次等�
 ## Logback的Appender
 列举一些常见的appender：
 >**ConsoleAppender**，输出至控制台
+
 >**FileAppender**，输出至文件
+
 >**RollingFileAppender**，输出至可以滚动的文件。TriggeringPolicy，决定是否以及何时进行滚动，RollingPolicy，负责滚动。TimeBasedRollingPolicy 它根据时间来制定滚动策略
+
 >**SocketAppender**，它通过序列化LoggingEven 将日志记录输出到远程。如果远程服务是关闭的，日志会被丢弃，其后台通过一个线程定时去尝试连接远程
+
 >**JMSTopicAppender和JMSQueueAppender**，它允许将日志输出至JMS。
+
 >**SMTPAppender**，输出至邮件服务器。
->**DBAppender**，输出至DB，支持DB2,MySQL,Oracle,SQL Server，HSQL,PostgreSQL等。
+
+>**DBAppender**，输出至DB，支持DB2,MySQL,Oracle,SQLServer,PostgreSQL等。
+
 >**SyslogAppender**，输出至*nix的syslog守护线程。
  
 ## Logback的过滤器
 基于三值逻辑（ternary logic），允许把它们组装成链，从而组成任意的复合过滤策略。过滤器很大程度上受到Linux的iptables启发。
+
 >**DENY**，立即被抛弃。
+
 >**NEUTRAL**，交给下一个过滤器处理。
+
 >**ACCEPT**，立即处理。
 
 ## 其他特性
