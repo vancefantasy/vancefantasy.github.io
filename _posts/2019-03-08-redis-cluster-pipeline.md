@@ -4,7 +4,7 @@ title: redis cluster pipeline
 ---
 
 ## redis cluster
-![cluster](../public/img/redis-cluster.png)
+![cluster]({{url}}/public/img/redis-cluster.png)
 
 
 ## redis pipeline
